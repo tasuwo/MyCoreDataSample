@@ -85,11 +85,11 @@ class ViewController: UIViewController {
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.didTapAdd(_:)))
 
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        self.tableView.register(ClipCell.nib, forCellReuseIdentifier: "Cell")
         self.dataSource = MyDataSource(tableView: self.tableView) {
             (tableView: UITableView, indexPath: IndexPath, itemIdentifier: ClipModel) -> UITableViewCell? in
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") else { return nil }
-            cell.textLabel?.text = itemIdentifier.id.uuidString
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? ClipCell else { return nil }
+            cell.clip = itemIdentifier
             return cell
         }
         self.dataSource.container = self.container
@@ -144,6 +144,14 @@ extension ViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .delete
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let clip = self.dataSource.itemIdentifier(for: indexPath) else { return }
+        let nextViewController = EditViewController()
+        nextViewController.container = self.container
+        nextViewController.clip = clip
+        self.navigationController?.pushViewController(nextViewController, animated: true)
     }
 }
 

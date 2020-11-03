@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		2C219110255189B800CA4520 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C21910F255189B800CA4520 /* ViewController.xib */; };
+		2C21911525519D7400CA4520 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C21911425519D7400CA4520 /* EditViewController.swift */; };
+		2C21911A25519D8600CA4520 /* EditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C21911925519D8600CA4520 /* EditViewController.xib */; };
+		2C21911F2551A17500CA4520 /* ClipCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C21911E2551A17500CA4520 /* ClipCell.xib */; };
+		2C2191242551A18D00CA4520 /* ClipCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2191232551A18D00CA4520 /* ClipCell.swift */; };
 		2C9AB63E255171D0003CC5B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9AB63D255171D0003CC5B5 /* AppDelegate.swift */; };
 		2C9AB640255171D0003CC5B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9AB63F255171D0003CC5B5 /* SceneDelegate.swift */; };
 		2C9AB642255171D0003CC5B5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9AB641255171D0003CC5B5 /* ViewController.swift */; };
@@ -37,6 +41,10 @@
 
 /* Begin PBXFileReference section */
 		2C21910F255189B800CA4520 /* ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
+		2C21911425519D7400CA4520 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		2C21911925519D8600CA4520 /* EditViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditViewController.xib; sourceTree = "<group>"; };
+		2C21911E2551A17500CA4520 /* ClipCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ClipCell.xib; sourceTree = "<group>"; };
+		2C2191232551A18D00CA4520 /* ClipCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipCell.swift; sourceTree = "<group>"; };
 		2C9AB63A255171D0003CC5B5 /* MyCoreDataSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCoreDataSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C9AB63D255171D0003CC5B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2C9AB63F255171D0003CC5B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +117,10 @@
 				2C9AB64E255171D2003CC5B5 /* Info.plist */,
 				2C9AB646255171D0003CC5B5 /* MyCoreDataSample.xcdatamodeld */,
 				2C21910F255189B800CA4520 /* ViewController.xib */,
+				2C21911425519D7400CA4520 /* EditViewController.swift */,
+				2C21911925519D8600CA4520 /* EditViewController.xib */,
+				2C21911E2551A17500CA4520 /* ClipCell.xib */,
+				2C2191232551A18D00CA4520 /* ClipCell.swift */,
 			);
 			path = MyCoreDataSample;
 			sourceTree = "<group>";
@@ -234,6 +246,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C21911A25519D8600CA4520 /* EditViewController.xib in Resources */,
+				2C21911F2551A17500CA4520 /* ClipCell.xib in Resources */,
 				2C9AB64D255171D2003CC5B5 /* LaunchScreen.storyboard in Resources */,
 				2C219110255189B800CA4520 /* ViewController.xib in Resources */,
 				2C9AB64A255171D2003CC5B5 /* Assets.xcassets in Resources */,
@@ -261,10 +275,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C21911525519D7400CA4520 /* EditViewController.swift in Sources */,
 				2C9AB648255171D0003CC5B5 /* MyCoreDataSample.xcdatamodeld in Sources */,
 				2C9AB642255171D0003CC5B5 /* ViewController.swift in Sources */,
 				2C9AB63E255171D0003CC5B5 /* AppDelegate.swift in Sources */,
 				2C9AB640255171D0003CC5B5 /* SceneDelegate.swift in Sources */,
+				2C2191242551A18D00CA4520 /* ClipCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

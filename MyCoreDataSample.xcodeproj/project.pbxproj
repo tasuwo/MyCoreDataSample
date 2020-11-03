@@ -12,6 +12,7 @@
 		2C21911A25519D8600CA4520 /* EditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C21911925519D8600CA4520 /* EditViewController.xib */; };
 		2C21911F2551A17500CA4520 /* ClipCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C21911E2551A17500CA4520 /* ClipCell.xib */; };
 		2C2191242551A18D00CA4520 /* ClipCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2191232551A18D00CA4520 /* ClipCell.swift */; };
+		2C21912B2551C75D00CA4520 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C21912A2551C75D00CA4520 /* CloudKit.framework */; };
 		2C9AB63E255171D0003CC5B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9AB63D255171D0003CC5B5 /* AppDelegate.swift */; };
 		2C9AB640255171D0003CC5B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9AB63F255171D0003CC5B5 /* SceneDelegate.swift */; };
 		2C9AB642255171D0003CC5B5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9AB641255171D0003CC5B5 /* ViewController.swift */; };
@@ -45,6 +46,8 @@
 		2C21911925519D8600CA4520 /* EditViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditViewController.xib; sourceTree = "<group>"; };
 		2C21911E2551A17500CA4520 /* ClipCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ClipCell.xib; sourceTree = "<group>"; };
 		2C2191232551A18D00CA4520 /* ClipCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipCell.swift; sourceTree = "<group>"; };
+		2C2191282551C49A00CA4520 /* MyCoreDataSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyCoreDataSample.entitlements; sourceTree = "<group>"; };
+		2C21912A2551C75D00CA4520 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		2C9AB63A255171D0003CC5B5 /* MyCoreDataSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCoreDataSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C9AB63D255171D0003CC5B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2C9AB63F255171D0003CC5B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C21912B2551C75D00CA4520 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +90,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C2191292551C75D00CA4520 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2C21912A2551C75D00CA4520 /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2C9AB631255171D0003CC5B5 = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +105,7 @@
 				2C9AB656255171D2003CC5B5 /* MyCoreDataSampleTests */,
 				2C9AB661255171D2003CC5B5 /* MyCoreDataSampleUITests */,
 				2C9AB63B255171D0003CC5B5 /* Products */,
+				2C2191292551C75D00CA4520 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,6 +122,7 @@
 		2C9AB63C255171D0003CC5B5 /* MyCoreDataSample */ = {
 			isa = PBXGroup;
 			children = (
+				2C2191282551C49A00CA4520 /* MyCoreDataSample.entitlements */,
 				2C9AB63D255171D0003CC5B5 /* AppDelegate.swift */,
 				2C9AB63F255171D0003CC5B5 /* SceneDelegate.swift */,
 				2C9AB641255171D0003CC5B5 /* ViewController.swift */,
@@ -448,6 +462,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MyCoreDataSample/MyCoreDataSample.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RY2377PP7S;
 				INFOPLIST_FILE = MyCoreDataSample/Info.plist;
@@ -467,6 +482,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MyCoreDataSample/MyCoreDataSample.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RY2377PP7S;
 				INFOPLIST_FILE = MyCoreDataSample/Info.plist;

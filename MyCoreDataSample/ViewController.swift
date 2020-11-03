@@ -42,8 +42,19 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     private var dataSource: UITableViewDiffableDataSource<Section, Clip>!
 
+    private var clips: [Clip] = [] {
+        didSet {
+            var snapshot = NSDiffableDataSourceSnapshot<Section, Clip>()
+            snapshot.appendSections([.main])
+            snapshot.appendItems(self.clips)
+            self.dataSource.apply(snapshot)
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.didTapAdd(_:)))
 
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         self.dataSource = UITableViewDiffableDataSource<Section, Clip>(tableView: self.tableView) {
@@ -54,19 +65,9 @@ class ViewController: UIViewController {
         }
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Clip>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(
-            [
-                .init(id: UUID()),
-                .init(id: UUID()),
-                .init(id: UUID())
-            ]
-        )
-        self.dataSource.apply(snapshot)
+    @objc
+    func didTapAdd(_ sender: UIBarButtonItem) {
+        self.clips.append(.init(id: UUID()))
     }
 }
 

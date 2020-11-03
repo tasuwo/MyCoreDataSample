@@ -69,7 +69,7 @@ class ViewController: UIViewController {
     }
 
     @IBOutlet weak var tableView: UITableView!
-    private var dataSource: UITableViewDiffableDataSource<Section, ClipModel>!
+    private var dataSource: MyDataSource!
 
     private var clips: [ClipModel] = [] {
         didSet {
@@ -86,13 +86,15 @@ class ViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.didTapAdd(_:)))
 
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        self.dataSource = UITableViewDiffableDataSource<Section, ClipModel>(tableView: self.tableView) {
+        self.dataSource = MyDataSource(tableView: self.tableView) {
             (tableView: UITableView, indexPath: IndexPath, itemIdentifier: ClipModel) -> UITableViewCell? in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") else { return nil }
             cell.textLabel?.text = itemIdentifier.id.uuidString
             return cell
         }
+        self.dataSource.container = self.container
         self.tableView.dataSource = self.dataSource
+        self.tableView.delegate = self
 
         let request = NSFetchRequest<Clip>(entityName: "Clip")
         request.sortDescriptors = [NSSortDescriptor(key: "registeredDate", ascending: true)]
@@ -137,3 +139,31 @@ extension ViewController: NSFetchedResultsControllerDelegate {
     }
 }
 
+extension ViewController: UITableViewDelegate {
+    // MARK: - UITableViewDelegate
+
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+}
+
+class MyDataSource: UITableViewDiffableDataSource<ViewController.Section, ViewController.ClipModel> {
+    weak var container: NSPersistentContainer?
+
+    // MARK: - Overrides (UITableViewDataSource)
+
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard let clip = self.itemIdentifier(for: indexPath) else { return }
+
+        let request = NSFetchRequest<Clip>(entityName: "Clip")
+        request.predicate = NSPredicate(format: "id == %@", clip.id as CVarArg)
+
+        guard let deleteTarget = try? self.container?.viewContext.fetch(request).first else { return }
+
+        self.container?.viewContext.delete(deleteTarget)
+    }
+}

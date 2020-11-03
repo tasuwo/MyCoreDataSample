@@ -15,13 +15,13 @@ class ViewController: UIViewController {
         case main
     }
 
-    struct Clip: Equatable, Hashable {
+    struct ClipModel: Equatable, Hashable {
         let id: UUID
         let descriptionText: String?
         let isHidden: Bool
         let registeredDate: Date
         let updatedDate: Date
-        let tags: [Tag]
+        let tags: [TagModel]
 
         init(id: UUID) {
             self.id = id
@@ -31,20 +31,48 @@ class ViewController: UIViewController {
             self.updatedDate = Date(timeIntervalSince1970: 0)
             self.tags = []
         }
+
+        init?(clip: Clip) {
+            guard let id = clip.id,
+                  let registeredDate = clip.registeredDate,
+                  let updatedDate = clip.updatedDate else {
+                return nil
+            }
+            self.id = id
+            self.descriptionText = clip.descriptionText
+            self.isHidden = clip.isHidden
+            self.registeredDate = registeredDate
+            self.updatedDate = updatedDate
+            self.tags = clip.tags?.allObjects
+                .compactMap { $0 as? Tag }
+                .compactMap { TagModel(tag: $0) } ?? []
+        }
     }
 
-    struct Tag: Equatable, Hashable {
+    struct TagModel: Equatable, Hashable {
         let id: UUID
         let name: String
-        let clips: Clip
+        let clips: [ClipModel]
+
+        init?(tag: Tag) {
+            guard let id = tag.id,
+                  let name = tag.name else {
+                return nil
+            }
+            self.id = id
+            self.name = name
+            self.clips = tag.clips?.allObjects
+                .compactMap { $0 as? Clip }
+                .compactMap { ClipModel(clip: $0) } ?? []
+        }
     }
 
     @IBOutlet weak var tableView: UITableView!
-    private var dataSource: UITableViewDiffableDataSource<Section, Clip>!
+    private var dataSource: UITableViewDiffableDataSource<Section, ClipModel>!
 
-    private var clips: [Clip] = [] {
+    private var clips: [ClipModel] = [] {
         didSet {
-            var snapshot = NSDiffableDataSourceSnapshot<Section, Clip>()
+            var snapshot = NSDiffableDataSourceSnapshot<Section, ClipModel>()
             snapshot.appendSections([.main])
             snapshot.appendItems(self.clips)
             self.dataSource.apply(snapshot)
@@ -57,17 +85,30 @@ class ViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.didTapAdd(_:)))
 
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        self.dataSource = UITableViewDiffableDataSource<Section, Clip>(tableView: self.tableView) {
-            (tableView: UITableView, indexPath: IndexPath, itemIdentifier: Clip) -> UITableViewCell? in
+        self.dataSource = UITableViewDiffableDataSource<Section, ClipModel>(tableView: self.tableView) {
+            (tableView: UITableView, indexPath: IndexPath, itemIdentifier: ClipModel) -> UITableViewCell? in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") else { return nil }
             cell.textLabel?.text = itemIdentifier.id.uuidString
             return cell
         }
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        let request = NSFetchRequest<Clip>(entityName: "Clip")
+        let result = try? self.container.viewContext.fetch(request)
+        self.clips = result?.compactMap { ClipModel(clip: $0) } ?? []
+    }
+
     @objc
     func didTapAdd(_ sender: UIBarButtonItem) {
-        self.clips.append(.init(id: UUID()))
+        let clip = NSEntityDescription.insertNewObject(forEntityName: "Clip",
+                                                       into: self.container.viewContext) as! Clip
+        clip.id = UUID()
+        clip.registeredDate = Date()
+        clip.updatedDate = Date()
+        try? self.container.viewContext.save()
     }
 }
 

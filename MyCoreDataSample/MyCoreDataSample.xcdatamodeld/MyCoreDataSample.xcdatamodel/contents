@@ -4,8 +4,8 @@
         <attribute name="descriptionText" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="UUID" defaultValueString="00000000-0000-0000-0000-000000000000" usesScalarValueType="YES"/>
         <attribute name="isHidden" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="registeredDate" attributeType="Date" defaultDateTimeInterval="-978339600" usesScalarValueType="YES"/>
-        <attribute name="updatedDate" attributeType="Date" defaultDateTimeInterval="-978339600" usesScalarValueType="YES"/>
+        <attribute name="registeredDate" attributeType="Date" defaultDateTimeInterval="-978339600" usesScalarValueType="NO"/>
+        <attribute name="updatedDate" attributeType="Date" defaultDateTimeInterval="-978339600" usesScalarValueType="NO"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="clips" inverseEntity="Tag"/>
     </entity>
     <entity name="Tag" representedClassName="Tag" syncable="YES" codeGenerationType="class">

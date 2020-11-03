@@ -10,6 +10,7 @@ import CoreData
 
 class ViewController: UIViewController {
     var container: NSPersistentContainer!
+    var controller: NSFetchedResultsController<Clip>!
 
     enum Section {
         case main
@@ -91,14 +92,20 @@ class ViewController: UIViewController {
             cell.textLabel?.text = itemIdentifier.id.uuidString
             return cell
         }
+        self.tableView.dataSource = self.dataSource
+
+        let request = NSFetchRequest<Clip>(entityName: "Clip")
+        request.sortDescriptors = [NSSortDescriptor(key: "registeredDate", ascending: true)]
+        self.controller = NSFetchedResultsController(fetchRequest: request,
+                                                     managedObjectContext: self.container.viewContext,
+                                                     sectionNameKeyPath: nil,
+                                                     cacheName: nil)
+        self.controller.delegate = self
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        let request = NSFetchRequest<Clip>(entityName: "Clip")
-        let result = try? self.container.viewContext.fetch(request)
-        self.clips = result?.compactMap { ClipModel(clip: $0) } ?? []
+        try! self.controller.performFetch()
     }
 
     @objc
@@ -109,6 +116,24 @@ class ViewController: UIViewController {
         clip.registeredDate = Date()
         clip.updatedDate = Date()
         try? self.container.viewContext.save()
+    }
+}
+
+extension ViewController: NSFetchedResultsControllerDelegate {
+    // MARK: - NSFetchedResultsControllerDelegate
+
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
+        var snapshot = snapshot as NSDiffableDataSourceSnapshot<Int, NSManagedObjectID>
+
+        let reloadIdentifiers: [NSManagedObjectID] = snapshot.itemIdentifiers.compactMap { itemIdentifier in
+            guard let existingObject = try? controller.managedObjectContext.existingObject(with: itemIdentifier), existingObject.isUpdated else { return nil }
+            return itemIdentifier
+        }
+        snapshot.reloadItems(reloadIdentifiers)
+
+        self.clips = snapshot.itemIdentifiers
+            .compactMap { controller.managedObjectContext.object(with: $0) as? Clip }
+            .compactMap { ClipModel(clip: $0) }
     }
 }
 

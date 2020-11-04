@@ -173,5 +173,6 @@ class MyDataSource: UITableViewDiffableDataSource<ViewController.Section, ViewCo
         guard let deleteTarget = try? self.container?.viewContext.fetch(request).first else { return }
 
         self.container?.viewContext.delete(deleteTarget)
+        try? self.container?.viewContext.save()
     }
 }

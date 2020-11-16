@@ -47,7 +47,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         })
 
-        try! container.initializeCloudKitSchema()
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        // try! container.initializeCloudKitSchema()
 
         return container
     }()

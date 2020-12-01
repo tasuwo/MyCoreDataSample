@@ -98,6 +98,56 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2C27092F25765E0E00071F2A /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				2C9AB63D255171D0003CC5B5 /* AppDelegate.swift */,
+				2C9AB63F255171D0003CC5B5 /* SceneDelegate.swift */,
+				2C9AB64B255171D2003CC5B5 /* LaunchScreen.storyboard */,
+				2C27093025765E2400071F2A /* ViewController */,
+				2C27093125765E4100071F2A /* View */,
+				2C27093325765E5700071F2A /* Model */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		2C27093025765E2400071F2A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2C9AB641255171D0003CC5B5 /* ViewController.swift */,
+				2C21910F255189B800CA4520 /* ViewController.xib */,
+				2C21911425519D7400CA4520 /* EditViewController.swift */,
+				2C21911925519D8600CA4520 /* EditViewController.xib */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		2C27093125765E4100071F2A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2C21911E2551A17500CA4520 /* ClipCell.xib */,
+				2C2191232551A18D00CA4520 /* ClipCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2C27093225765E4D00071F2A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2C2191282551C49A00CA4520 /* MyCoreDataSample.entitlements */,
+				2C9AB649255171D2003CC5B5 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		2C27093325765E5700071F2A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2C9AB646255171D0003CC5B5 /* MyCoreDataSample.xcdatamodeld */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		2C9AB631255171D0003CC5B5 = {
 			isa = PBXGroup;
 			children = (
@@ -122,19 +172,9 @@
 		2C9AB63C255171D0003CC5B5 /* MyCoreDataSample */ = {
 			isa = PBXGroup;
 			children = (
-				2C2191282551C49A00CA4520 /* MyCoreDataSample.entitlements */,
-				2C9AB63D255171D0003CC5B5 /* AppDelegate.swift */,
-				2C9AB63F255171D0003CC5B5 /* SceneDelegate.swift */,
-				2C9AB641255171D0003CC5B5 /* ViewController.swift */,
-				2C9AB649255171D2003CC5B5 /* Assets.xcassets */,
-				2C9AB64B255171D2003CC5B5 /* LaunchScreen.storyboard */,
+				2C27092F25765E0E00071F2A /* Sources */,
+				2C27093225765E4D00071F2A /* Resources */,
 				2C9AB64E255171D2003CC5B5 /* Info.plist */,
-				2C9AB646255171D0003CC5B5 /* MyCoreDataSample.xcdatamodeld */,
-				2C21910F255189B800CA4520 /* ViewController.xib */,
-				2C21911425519D7400CA4520 /* EditViewController.swift */,
-				2C21911925519D8600CA4520 /* EditViewController.xib */,
-				2C21911E2551A17500CA4520 /* ClipCell.xib */,
-				2C2191232551A18D00CA4520 /* ClipCell.swift */,
 			);
 			path = MyCoreDataSample;
 			sourceTree = "<group>";

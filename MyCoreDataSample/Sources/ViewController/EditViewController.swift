@@ -20,9 +20,13 @@ class EditViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save,
-                                                                 target: self,
-                                                                 action: #selector(self.didTapSave(_:)))
+        let saveButton = UIBarButtonItem(barButtonSystemItem: .save,
+                                         target: self,
+                                         action: #selector(self.didTapSave(_:)))
+        let addTagButton = UIBarButtonItem(barButtonSystemItem: .add,
+                                           target: self,
+                                           action: #selector(self.didTapAddTag(_:)))
+        self.navigationItem.rightBarButtonItems = [saveButton, addTagButton]
 
         self.titleTextField.text = self.note.title
         self.uuidLabel.text = self.note.id.uuidString
@@ -42,5 +46,37 @@ class EditViewController: UIViewController {
         try! self.container?.viewContext.save()
 
         self.navigationController?.popViewController(animated: true)
+    }
+
+    @objc
+    func didTapAddTag(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "タグを追加", message: nil, preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.placeholder = "タグ名"
+        }
+
+        let saveAction = UIAlertAction(title: "保存", style: .default) { [unowned self] _ in
+            let request = NSFetchRequest<Note>(entityName: "Note")
+            request.predicate = NSPredicate(format: "id == %@", self.note.id as CVarArg)
+            guard let note = try? self.container?.viewContext.fetch(request).first else { return }
+
+            guard
+                let context = self.container?.viewContext,
+                let textField = alert.textFields?.first,
+                let text = textField.text else {
+                return
+            }
+
+            let tag = Tag(context: context)
+            tag.id = UUID()
+            tag.name = text
+            tag.addToNotes(note)
+        }
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
+
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+
+        self.present(alert, animated: true, completion: nil)
     }
 }

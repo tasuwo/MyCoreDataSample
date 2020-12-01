@@ -12,11 +12,10 @@ class EditViewController: UIViewController {
     var container: NSPersistentContainer!
     var note: NoteModel!
 
+    @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var uuidLabel: UILabel!
-    @IBOutlet weak var descriptionTextField: UITextField!
-    @IBOutlet weak var isHiddenSwitch: UISwitch!
-    @IBOutlet weak var updateDatePicker: UIDatePicker!
-    @IBOutlet weak var registeredDateLabel: UILabel!
+    @IBOutlet weak var updatedAtLabel: UILabel!
+    @IBOutlet weak var createdAtLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,11 +24,10 @@ class EditViewController: UIViewController {
                                                                  target: self,
                                                                  action: #selector(self.didTapSave(_:)))
 
+        self.titleTextField.text = self.note.title
         self.uuidLabel.text = self.note.id.uuidString
-        // self.descriptionTextField.text = self.note.descriptionText
-        // self.isHiddenSwitch.isOn = self.clip.isHidden
-        self.updateDatePicker.date = self.note.updatedAt
-        self.registeredDateLabel.text = self.note.createdAt.string
+        self.updatedAtLabel.text = self.note.updatedAt.string
+        self.createdAtLabel.text = self.note.createdAt.string
     }
 
     @objc
@@ -38,10 +36,11 @@ class EditViewController: UIViewController {
         request.predicate = NSPredicate(format: "id == %@", note.id as CVarArg)
         guard let target = try? self.container?.viewContext.fetch(request).first else { return }
 
-        // target.descriptionText = self.descriptionTextField.text
-        // target.isHidden = self.isHiddenSwitch.isOn
-        target.updatedAt = self.updateDatePicker.date
+        target.title = self.titleTextField.text
+        target.updatedAt = Date()
 
         try! self.container?.viewContext.save()
+
+        self.navigationController?.popViewController(animated: true)
     }
 }

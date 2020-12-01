@@ -61,6 +61,23 @@ class EditViewController: UIViewController {
     @objc
     func didTapAddTag(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title: "タグを追加", message: nil, preferredStyle: .alert)
+        let addNewTagAction = UIAlertAction(title: "新規タグを追加", style: .default) { [unowned self] _ in
+            self.addNewTag()
+        }
+        let addOldTagAction = UIAlertAction(title: "既存のタグを追加", style: .default) { [unowned self] _ in
+            self.addOldTag()
+        }
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
+
+        alert.addAction(addNewTagAction)
+        alert.addAction(addOldTagAction)
+        alert.addAction(cancelAction)
+
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    private func addNewTag() {
+        let alert = UIAlertController(title: "タグを追加", message: nil, preferredStyle: .alert)
         alert.addTextField { textField in
             textField.placeholder = "タグ名"
         }
@@ -90,5 +107,9 @@ class EditViewController: UIViewController {
         alert.addAction(cancelAction)
 
         self.present(alert, animated: true, completion: nil)
+    }
+
+    private func addOldTag() {
+        // WIP
     }
 }

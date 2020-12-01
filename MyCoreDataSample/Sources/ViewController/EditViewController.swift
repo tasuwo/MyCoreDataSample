@@ -10,7 +10,7 @@ import CoreData
 
 class EditViewController: UIViewController {
     var container: NSPersistentContainer!
-    var clip: ViewController.ClipModel!
+    var note: NoteModel!
 
     @IBOutlet weak var uuidLabel: UILabel!
     @IBOutlet weak var descriptionTextField: UITextField!
@@ -25,22 +25,22 @@ class EditViewController: UIViewController {
                                                                  target: self,
                                                                  action: #selector(self.didTapSave(_:)))
 
-        self.uuidLabel.text = self.clip.id.uuidString
-        self.descriptionTextField.text = self.clip.descriptionText
-        self.isHiddenSwitch.isOn = self.clip.isHidden
-        self.updateDatePicker.date = self.clip.updatedDate
-        self.registeredDateLabel.text = self.clip.registeredDate.string
+        self.uuidLabel.text = self.note.id.uuidString
+        // self.descriptionTextField.text = self.note.descriptionText
+        // self.isHiddenSwitch.isOn = self.clip.isHidden
+        self.updateDatePicker.date = self.note.updatedAt
+        self.registeredDateLabel.text = self.note.createdAt.string
     }
 
     @objc
     func didTapSave(_ sender: UIBarButtonItem) {
-        let request = NSFetchRequest<Clip>(entityName: "Clip")
-        request.predicate = NSPredicate(format: "id == %@", clip.id as CVarArg)
+        let request = NSFetchRequest<Note>(entityName: "Note")
+        request.predicate = NSPredicate(format: "id == %@", note.id as CVarArg)
         guard let target = try? self.container?.viewContext.fetch(request).first else { return }
 
-        target.descriptionText = self.descriptionTextField.text
-        target.isHidden = self.isHiddenSwitch.isOn
-        target.updatedDate = self.updateDatePicker.date
+        // target.descriptionText = self.descriptionTextField.text
+        // target.isHidden = self.isHiddenSwitch.isOn
+        target.updatedAt = self.updateDatePicker.date
 
         try! self.container?.viewContext.save()
     }

@@ -10,9 +10,11 @@
 		2C219110255189B800CA4520 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C21910F255189B800CA4520 /* ViewController.xib */; };
 		2C21911525519D7400CA4520 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C21911425519D7400CA4520 /* EditViewController.swift */; };
 		2C21911A25519D8600CA4520 /* EditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C21911925519D8600CA4520 /* EditViewController.xib */; };
-		2C21911F2551A17500CA4520 /* ClipCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C21911E2551A17500CA4520 /* ClipCell.xib */; };
-		2C2191242551A18D00CA4520 /* ClipCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2191232551A18D00CA4520 /* ClipCell.swift */; };
+		2C21911F2551A17500CA4520 /* NoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C21911E2551A17500CA4520 /* NoteCell.xib */; };
+		2C2191242551A18D00CA4520 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2191232551A18D00CA4520 /* NoteCell.swift */; };
 		2C21912B2551C75D00CA4520 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C21912A2551C75D00CA4520 /* CloudKit.framework */; };
+		2C27093825765FA800071F2A /* NoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C27093725765FA800071F2A /* NoteModel.swift */; };
+		2C27093D2576600D00071F2A /* TagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C27093C2576600D00071F2A /* TagModel.swift */; };
 		2C9AB63E255171D0003CC5B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9AB63D255171D0003CC5B5 /* AppDelegate.swift */; };
 		2C9AB640255171D0003CC5B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9AB63F255171D0003CC5B5 /* SceneDelegate.swift */; };
 		2C9AB642255171D0003CC5B5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9AB641255171D0003CC5B5 /* ViewController.swift */; };
@@ -44,10 +46,12 @@
 		2C21910F255189B800CA4520 /* ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
 		2C21911425519D7400CA4520 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		2C21911925519D8600CA4520 /* EditViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditViewController.xib; sourceTree = "<group>"; };
-		2C21911E2551A17500CA4520 /* ClipCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ClipCell.xib; sourceTree = "<group>"; };
-		2C2191232551A18D00CA4520 /* ClipCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipCell.swift; sourceTree = "<group>"; };
+		2C21911E2551A17500CA4520 /* NoteCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteCell.xib; sourceTree = "<group>"; };
+		2C2191232551A18D00CA4520 /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 		2C2191282551C49A00CA4520 /* MyCoreDataSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyCoreDataSample.entitlements; sourceTree = "<group>"; };
 		2C21912A2551C75D00CA4520 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		2C27093725765FA800071F2A /* NoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteModel.swift; sourceTree = "<group>"; };
+		2C27093C2576600D00071F2A /* TagModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagModel.swift; sourceTree = "<group>"; };
 		2C9AB63A255171D0003CC5B5 /* MyCoreDataSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCoreDataSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C9AB63D255171D0003CC5B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2C9AB63F255171D0003CC5B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -125,8 +129,8 @@
 		2C27093125765E4100071F2A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2C21911E2551A17500CA4520 /* ClipCell.xib */,
-				2C2191232551A18D00CA4520 /* ClipCell.swift */,
+				2C21911E2551A17500CA4520 /* NoteCell.xib */,
+				2C2191232551A18D00CA4520 /* NoteCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -144,6 +148,8 @@
 			isa = PBXGroup;
 			children = (
 				2C9AB646255171D0003CC5B5 /* MyCoreDataSample.xcdatamodeld */,
+				2C27093725765FA800071F2A /* NoteModel.swift */,
+				2C27093C2576600D00071F2A /* TagModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -301,7 +307,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C21911A25519D8600CA4520 /* EditViewController.xib in Resources */,
-				2C21911F2551A17500CA4520 /* ClipCell.xib in Resources */,
+				2C21911F2551A17500CA4520 /* NoteCell.xib in Resources */,
 				2C9AB64D255171D2003CC5B5 /* LaunchScreen.storyboard in Resources */,
 				2C219110255189B800CA4520 /* ViewController.xib in Resources */,
 				2C9AB64A255171D2003CC5B5 /* Assets.xcassets in Resources */,
@@ -332,9 +338,11 @@
 				2C21911525519D7400CA4520 /* EditViewController.swift in Sources */,
 				2C9AB648255171D0003CC5B5 /* MyCoreDataSample.xcdatamodeld in Sources */,
 				2C9AB642255171D0003CC5B5 /* ViewController.swift in Sources */,
+				2C27093825765FA800071F2A /* NoteModel.swift in Sources */,
 				2C9AB63E255171D0003CC5B5 /* AppDelegate.swift in Sources */,
 				2C9AB640255171D0003CC5B5 /* SceneDelegate.swift in Sources */,
-				2C2191242551A18D00CA4520 /* ClipCell.swift in Sources */,
+				2C27093D2576600D00071F2A /* TagModel.swift in Sources */,
+				2C2191242551A18D00CA4520 /* NoteCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

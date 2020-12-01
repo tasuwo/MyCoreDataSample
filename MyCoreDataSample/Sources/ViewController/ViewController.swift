@@ -10,72 +10,20 @@ import CoreData
 
 class ViewController: UIViewController {
     var container: NSPersistentContainer!
-    var controller: NSFetchedResultsController<Clip>!
+    var controller: NSFetchedResultsController<Note>!
 
     enum Section {
         case main
     }
 
-    struct ClipModel: Equatable, Hashable {
-        let id: UUID
-        let descriptionText: String?
-        let isHidden: Bool
-        let registeredDate: Date
-        let updatedDate: Date
-        let tags: [TagModel]
-
-        init(id: UUID) {
-            self.id = id
-            self.descriptionText = nil
-            self.isHidden = false
-            self.registeredDate = Date(timeIntervalSince1970: 0)
-            self.updatedDate = Date(timeIntervalSince1970: 0)
-            self.tags = []
-        }
-
-        init?(clip: Clip) {
-            guard let id = clip.id,
-                  let registeredDate = clip.registeredDate,
-                  let updatedDate = clip.updatedDate else {
-                return nil
-            }
-            self.id = id
-            self.descriptionText = clip.descriptionText
-            self.isHidden = clip.isHidden
-            self.registeredDate = registeredDate
-            self.updatedDate = updatedDate
-            self.tags = clip.tags?.allObjects
-                .compactMap { $0 as? Tag }
-                .compactMap { TagModel(tag: $0) } ?? []
-        }
-    }
-
-    struct TagModel: Equatable, Hashable {
-        let id: UUID
-        let name: String
-        let clips: [ClipModel]
-
-        init?(tag: Tag) {
-            guard let id = tag.id,
-                  let name = tag.name else {
-                return nil
-            }
-            self.id = id
-            self.name = name
-            self.clips = tag.clips?.allObjects
-                .compactMap { $0 as? Clip }
-                .compactMap { ClipModel(clip: $0) } ?? []
-        }
-    }
-
     @IBOutlet weak var tableView: UITableView!
     private var dataSource: MyDataSource!
 
-    private var clips: [ClipModel] = [] {
+    private var notes: [NoteModel] = [] {
         didSet {
-            var snapshot = NSDiffableDataSourceSnapshot<Section, ClipModel>()
+            var snapshot = NSDiffableDataSourceSnapshot<Section, NoteModel>()
             snapshot.appendSections([.main])
-            snapshot.appendItems(self.clips)
+            snapshot.appendItems(self.notes)
             self.dataSource.apply(snapshot)
         }
     }
@@ -85,19 +33,19 @@ class ViewController: UIViewController {
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.didTapAdd(_:)))
 
-        self.tableView.register(ClipCell.nib, forCellReuseIdentifier: "Cell")
+        self.tableView.register(NoteCell.nib, forCellReuseIdentifier: "Cell")
         self.dataSource = MyDataSource(tableView: self.tableView) {
-            (tableView: UITableView, indexPath: IndexPath, itemIdentifier: ClipModel) -> UITableViewCell? in
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? ClipCell else { return nil }
-            cell.clip = itemIdentifier
+            (tableView: UITableView, indexPath: IndexPath, itemIdentifier: NoteModel) -> UITableViewCell? in
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? NoteCell else { return nil }
+            cell.note = itemIdentifier
             return cell
         }
         self.dataSource.container = self.container
         self.tableView.dataSource = self.dataSource
         self.tableView.delegate = self
 
-        let request = NSFetchRequest<Clip>(entityName: "Clip")
-        request.sortDescriptors = [NSSortDescriptor(key: "registeredDate", ascending: true)]
+        let request = NSFetchRequest<Note>(entityName: "Note")
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
         self.controller = NSFetchedResultsController(fetchRequest: request,
                                                      managedObjectContext: self.container.viewContext,
                                                      sectionNameKeyPath: nil,
@@ -112,11 +60,12 @@ class ViewController: UIViewController {
 
     @objc
     func didTapAdd(_ sender: UIBarButtonItem) {
-        let clip = NSEntityDescription.insertNewObject(forEntityName: "Clip",
-                                                       into: self.container.viewContext) as! Clip
-        clip.id = UUID()
-        clip.registeredDate = Date()
-        clip.updatedDate = Date()
+        let note = NSEntityDescription.insertNewObject(forEntityName: "Note",
+                                                       into: self.container.viewContext) as! Note
+        note.id = UUID()
+        note.title = "Untitled"
+        note.updatedAt = Date()
+        note.createdAt = Date()
         try? self.container.viewContext.save()
     }
 }
@@ -133,9 +82,9 @@ extension ViewController: NSFetchedResultsControllerDelegate {
         }
         snapshot.reloadItems(reloadIdentifiers)
 
-        self.clips = snapshot.itemIdentifiers
-            .compactMap { controller.managedObjectContext.object(with: $0) as? Clip }
-            .compactMap { ClipModel(clip: $0) }
+        self.notes = snapshot.itemIdentifiers
+            .compactMap { controller.managedObjectContext.object(with: $0) as? Note }
+            .compactMap { $0.map(to: NoteModel.self) }
     }
 }
 
@@ -147,15 +96,15 @@ extension ViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let clip = self.dataSource.itemIdentifier(for: indexPath) else { return }
+        guard let note = self.dataSource.itemIdentifier(for: indexPath) else { return }
         let nextViewController = EditViewController()
         nextViewController.container = self.container
-        nextViewController.clip = clip
+        nextViewController.note = note
         self.navigationController?.pushViewController(nextViewController, animated: true)
     }
 }
 
-class MyDataSource: UITableViewDiffableDataSource<ViewController.Section, ViewController.ClipModel> {
+class MyDataSource: UITableViewDiffableDataSource<ViewController.Section, NoteModel> {
     weak var container: NSPersistentContainer?
 
     // MARK: - Overrides (UITableViewDataSource)
@@ -165,10 +114,10 @@ class MyDataSource: UITableViewDiffableDataSource<ViewController.Section, ViewCo
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        guard let clip = self.itemIdentifier(for: indexPath) else { return }
+        guard let note = self.itemIdentifier(for: indexPath) else { return }
 
-        let request = NSFetchRequest<Clip>(entityName: "Clip")
-        request.predicate = NSPredicate(format: "id == %@", clip.id as CVarArg)
+        let request = NSFetchRequest<Note>(entityName: "Note")
+        request.predicate = NSPredicate(format: "id == %@", note.id as CVarArg)
 
         guard let deleteTarget = try? self.container?.viewContext.fetch(request).first else { return }
 

@@ -1,5 +1,5 @@
 //
-//  ClipCell.swift
+//  NoteCell.swift
 //  MyCoreDataSample
 //
 //  Created by Tasuku Tozawa on 2020/11/03.
@@ -7,20 +7,20 @@
 
 import UIKit
 
-class ClipCell: UITableViewCell {
+class NoteCell: UITableViewCell {
     static var nib: UINib {
-        return UINib(nibName: "ClipCell", bundle: Bundle(for: Self.self))
+        return UINib(nibName: "NoteCell", bundle: Bundle(for: Self.self))
     }
 
-    var clip: ViewController.ClipModel? {
+    var note : NoteModel? {
         didSet {
-            guard let clip = self.clip else { return }
-            self.uuidLabel.text = clip.id.uuidString
-            self.descriptionLabel.text = clip.descriptionText
-            self.isHiddenLabel.text = clip.isHidden ? "Yes" : "No"
-            self.registeredDateLabel.text = clip.registeredDate.string
-            self.updatedDateLabel.text = clip.updatedDate.string
-            self.tagsLabel.text = clip.tags.map { $0.name }.joined(separator: ",")
+            guard let note = self.note else { return }
+            self.uuidLabel.text = note.id.uuidString
+            // self.descriptionLabel.text = note.descriptionText
+            // self.isHiddenLabel.text = note.isHidden ? "Yes" : "No"
+            self.registeredDateLabel.text = note.createdAt.string
+            self.updatedDateLabel.text = note.updatedAt.string
+            // self.tagsLabel.text = note.tags.map { $0.name }.joined(separator: ",")
         }
     }
 

@@ -15,20 +15,20 @@ class NoteCell: UITableViewCell {
     var note : NoteModel? {
         didSet {
             guard let note = self.note else { return }
+            self.titleLabel.text = note.title
             self.uuidLabel.text = note.id.uuidString
-            // self.descriptionLabel.text = note.descriptionText
-            // self.isHiddenLabel.text = note.isHidden ? "Yes" : "No"
-            self.registeredDateLabel.text = note.createdAt.string
-            self.updatedDateLabel.text = note.updatedAt.string
-            // self.tagsLabel.text = note.tags.map { $0.name }.joined(separator: ",")
+            self.createdAtLabel.text = note.createdAt.string
+            self.updatedAtLabel.text = note.updatedAt.string
+            // TODO:
+            self.tagsLabel.text = "No Tags"
+            self.tagsLabel.textColor = .secondaryLabel
         }
     }
 
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var uuidLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var isHiddenLabel: UILabel!
-    @IBOutlet weak var registeredDateLabel: UILabel!
-    @IBOutlet weak var updatedDateLabel: UILabel!
+    @IBOutlet weak var createdAtLabel: UILabel!
+    @IBOutlet weak var updatedAtLabel: UILabel!
     @IBOutlet weak var tagsLabel: UILabel!
 }
 

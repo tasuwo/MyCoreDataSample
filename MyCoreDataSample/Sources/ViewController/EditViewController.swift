@@ -81,6 +81,8 @@ class EditViewController: UIViewController {
             tag.id = UUID()
             tag.name = text
             tag.addToNotes(note)
+
+            try! context.save()
         }
         let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
 

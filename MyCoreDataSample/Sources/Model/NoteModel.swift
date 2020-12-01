@@ -12,6 +12,7 @@ struct NoteModel {
     let title: String
     let createdAt: Date
     let updatedAt: Date
+    let tags: [TagModel]
 }
 
 extension NoteModel: Hashable {}
@@ -24,11 +25,17 @@ extension Note {
             let updatedAt = self.updatedAt else {
             return nil
         }
+
+        let tags = self.tags?.allObjects
+            .compactMap { $0 as? Tag }
+            .compactMap { $0.map(to: TagModel.self) } ?? []
+
         return .init(
             id: id,
             title: title ?? "",
             createdAt: createdAt,
-            updatedAt: updatedAt
+            updatedAt: updatedAt,
+            tags: tags
         )
     }
 }

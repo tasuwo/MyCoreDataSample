@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EditViewController" customModule="MyCoreDataSample" customModuleProvider="target">
             <connections>
                 <outlet property="createdAtLabel" destination="Ah4-oj-fZY" id="tiL-1d-DYr"/>
+                <outlet property="tagsLabel" destination="8el-7K-sUA" id="2LY-aS-NqS"/>
                 <outlet property="titleTextField" destination="lwN-Ks-QV3" id="a4q-j5-eGl"/>
                 <outlet property="updatedAtLabel" destination="pQg-36-BZd" id="CNl-JI-Rgy"/>
                 <outlet property="uuidLabel" destination="4dA-z1-UWC" id="oSP-GT-EZZ"/>
@@ -24,7 +25,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="fhe-js-DbX">
-                    <rect key="frame" x="20" y="64" width="374" height="152.5"/>
+                    <rect key="frame" x="20" y="64" width="374" height="177"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ge-lR-cRb">
                             <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
@@ -127,6 +128,29 @@
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="5x3-Eh-5Dv"/>
+                            </constraints>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W2B-Mk-E0e">
+                            <rect key="frame" x="0.0" y="156.5" width="374" height="20.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tags" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ceD-5g-jSt" userLabel="Tags">
+                                    <rect key="frame" x="0.0" y="0.0" width="70" height="20.5"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="70" id="uTb-RY-xtz"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8el-7K-sUA">
+                                    <rect key="frame" x="70" y="0.0" width="304" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="height" secondItem="8el-7K-sUA" secondAttribute="height" id="XIf-KI-NgH"/>
                             </constraints>
                         </stackView>
                     </subviews>

@@ -16,6 +16,7 @@ class EditViewController: UIViewController {
     @IBOutlet weak var uuidLabel: UILabel!
     @IBOutlet weak var updatedAtLabel: UILabel!
     @IBOutlet weak var createdAtLabel: UILabel!
+    @IBOutlet weak var tagsLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,15 @@ class EditViewController: UIViewController {
         self.uuidLabel.text = self.note.id.uuidString
         self.updatedAtLabel.text = self.note.updatedAt.string
         self.createdAtLabel.text = self.note.createdAt.string
+        if note.tags.isEmpty {
+            self.tagsLabel.text = "No Tags"
+            self.tagsLabel.textColor = .secondaryLabel
+        } else {
+            self.tagsLabel.text = note.tags
+                .map { $0.name }
+                .joined(separator: ", ")
+            self.tagsLabel.textColor = .label
+        }
     }
 
     @objc

@@ -19,9 +19,15 @@ class NoteCell: UITableViewCell {
             self.uuidLabel.text = note.id.uuidString
             self.createdAtLabel.text = note.createdAt.string
             self.updatedAtLabel.text = note.updatedAt.string
-            // TODO:
-            self.tagsLabel.text = "No Tags"
-            self.tagsLabel.textColor = .secondaryLabel
+            if note.tags.isEmpty {
+                self.tagsLabel.text = "No Tags"
+                self.tagsLabel.textColor = .secondaryLabel
+            } else {
+                self.tagsLabel.text = note.tags
+                    .map { $0.name }
+                    .joined(separator: ", ")
+                self.tagsLabel.textColor = .label
+            }
         }
     }
 
